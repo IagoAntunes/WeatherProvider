@@ -33,6 +33,9 @@ String getNameToday() {
   DateTime now = DateTime.now();
   String? dayOfWeek;
   dayOfWeek = DateFormat('EEEE', 'pt_BR').format(now);
+  if (dayOfWeek == "sabado" || dayOfWeek == "domingo") {
+    return dayOfWeek.capitalize;
+  }
   return dayOfWeek.capitalize2;
 }
 
