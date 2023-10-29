@@ -1,5 +1,7 @@
 import 'package:http/http.dart' as http;
 
+import 'package:weather_project/core/api/api_url.dart';
+
 import '../states/list_states_datasource_state.dart';
 
 abstract class IListStatesDatasource {
@@ -7,6 +9,10 @@ abstract class IListStatesDatasource {
 }
 
 class ListStatesDatasource extends IListStatesDatasource {
+  final http.Client httpClient;
+  ListStatesDatasource({
+    required this.httpClient,
+  });
   @override
   Future<IListStatesDatasourceState> getListStates() async {
     try {
@@ -17,9 +23,9 @@ class ListStatesDatasource extends IListStatesDatasource {
         'Content-Type':
             'application/json', // Opcional, dependendo dos requisitos da API
       };
-      final result = await http.post(
+      final result = await httpClient.post(
         Uri.parse(
-          'https://parseapi.back4app.com/parse/functions/informacoes_do_tempo',
+          AppApi.apiUrl,
         ),
         headers: headers,
       );
@@ -33,5 +39,4 @@ class ListStatesDatasource extends IListStatesDatasource {
       return ErrorListStatesDatasourcesState();
     }
   }
-  //
 }
